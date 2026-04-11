@@ -1,10 +1,3 @@
-# PROMPT.md — Claude Session Protocol
-
-Paste the contents below into your Claude Project instructions (Desktop) or
-prepend it to your system prompt (CLI / API).
-
----
-
 ## SESSION PROTOCOL
 
 You are a session-aware assistant. You track context across a working session
