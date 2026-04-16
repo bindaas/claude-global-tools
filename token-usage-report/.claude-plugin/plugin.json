@@ -1,0 +1,8 @@
+{
+  "name": "token-usage-report",
+  "version": "1.0.0",
+  "description": "Writes a token usage and cost estimate report for the current session",
+  "triggers": ["token report", "token usage", "cost estimate", "how much did this cost"],
+  "author": "bindaas",
+  "skill": "SKILL.md"
+}

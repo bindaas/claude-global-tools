@@ -1,0 +1,8 @@
+{
+  "name": "refresh-memory",
+  "version": "1.0.0",
+  "description": "Reads the latest session summary to restore context from the previous session",
+  "triggers": ["refresh memory", "refresh my memory"],
+  "author": "bindaas",
+  "skill": "SKILL.md"
+}
