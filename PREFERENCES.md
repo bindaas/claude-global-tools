@@ -14,6 +14,14 @@
 
 ---
 
+## OPENSPEC RULES
+
+- **On `/opsx:propose`**: At the end of `tasks.md`, append an `## Assumptions` table with two columns — `Assumption` and `Where to verify`. List the key code-level assumptions the tasks depend on (e.g., function names, rendering patterns, data structures, API response shape). Be specific enough that drift is detectable by reading 1–2 files.
+
+- **On `/opsx:apply`**: Before writing any code, read the files listed in the Assumptions table and verify each assumption still holds. Flag any that have drifted (technically or functionally) and surface them in the "before any code" confirmation step. Do not proceed until the user acknowledges the drift.
+
+---
+
 ## DATA MODEL DISCIPLINE
 
 - Before implementing features that touch the database: if `PRODUCT.md` exists, read it and verify table semantics match product intent.
