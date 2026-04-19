@@ -13,8 +13,8 @@ Do not ask questions mid-way.
 
 ## Session Memory File
 
-**Path:** `<repo-root>/session_memory_<YYYY-MM-DD>.md`
-Overwrite if it already exists (same-day session).
+**Path:** `<repo-root>/session_memory_<YYYY-MM-DD_HH-MM-SS>.md`
+Use the current timestamp at the time of writing. Never overwrite an existing file.
 
 **Include:**
 - What was worked on (1–2 sentences, high level)
@@ -27,13 +27,11 @@ Overwrite if it already exists (same-day session).
 
 **Omit:** anything resolved, conversational back-and-forth, thinking-out-loud that didn't produce a decision or change.
 
-**Style:** follow existing `session_memory_*.md` files in the repo root if any exist.
-
 ---
 
 ## After writing the file
 
 One-line confirmation:
-> "✅ `session_memory_<date>.md` written."
+> "✅ `session_memory_<date_and_time>.md` written."
 
 Nothing else.

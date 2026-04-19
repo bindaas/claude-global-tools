@@ -1,7 +1,7 @@
 # Skill: token-usage-report
 
 ## Trigger
-User asks for a token report, token usage summary, or cost estimate for the session.
+User says "token-usage-report", asks for a token report, token usage summary, or cost estimate for the session.
 
 ---
 

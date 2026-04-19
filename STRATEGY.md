@@ -4,6 +4,20 @@
 
 ---
 
+## TOOL USAGE
+
+- **Never use `find`, `ls`, or `grep` as Bash commands** to explore files. Use `Glob` for file listing and `Grep` tool for content search. `find` returns `.git/objects/` noise and wastes tokens.
+
+---
+
+## FILE READING DISCIPLINE
+
+- Use `head` on large files to check structure before reading fully
+- For "where is X configured?" — reason about it first, read at most 1–2 candidates
+- Never read frontend/UI files to answer backend/config questions
+
+---
+
 ## SESSION MANAGEMENT
 
 - If the conversation is getting long: **warn me to start a new session**
@@ -11,17 +25,8 @@
 
 ---
 
-## FILE READING DISCIPLINE
+## GIT & DESTRUCTIVE ACTIONS
 
-- Before reading any file: state which file and why
-- Use `head` on large files to check structure before reading fully
-- For "where is X configured?" — reason about it first, read at most 1–2 candidates
-- Never read frontend/UI files to answer backend/config questions
-- Allowed full reads without asking: `CLAUDE.md`, `ARCHITECTURE.md`
+- **Never** commit secrets, credentials, or user-specific paths
+- **Never** log or display credential values — confirm set/unset only
 
----
-
-## COST CHECK BEFORE ACTING
-
-- If a task seems expensive (many files to read, large rewrite, cascading changes): stop and propose a cheaper path first
-- **Cost check before acting:** Estimate scope before diving in. Surface the estimate to the user.

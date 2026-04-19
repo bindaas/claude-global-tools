@@ -2,7 +2,7 @@
   "name": "session-memory",
   "version": "1.0.0",
   "description": "Writes a session summary file capturing what was worked on, decisions made, and next steps",
-  "triggers": ["save session memory", "write session summary", "record session"],
+  "triggers": ["session-memory", "save session memory", "write session summary", "record session"],
   "author": "bindaas",
   "skill": "SKILL.md"
 }
