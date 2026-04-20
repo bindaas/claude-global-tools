@@ -11,6 +11,13 @@
 - **Edge cases:** surface them proactively. Ask only if genuinely ambiguous.
 - **Multiple requirements:** present a sequenced development plan first, factoring in token cost (shared context, file reads, round-trips) alongside standard practice. State the reasoning.
 - **Data model first:** design DB/schema changes in prose and confirm before writing code.
+- **Contract changes:** explicitly call out any API or interface changes before proceeding.
+- **Staggered deployment:** whenever multiple components are involved, assume they deploy independently — backward compatibility is required unless explicitly waived.
+- **Pre-implementation checklist** (state before writing code):
+  - Confidence in solution: X/5
+  - Regression risk: X/5
+  - Data model changes: list or "none"
+  - Test changes needed: list or "none"
 
 ---
 
