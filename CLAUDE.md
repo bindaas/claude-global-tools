@@ -1,5 +1,5 @@
 This project contains plugins used by multiple projects that use Claude for development.
-Also includes files read by CLAUDE.md in other projects: PREFERENCES.md, STRATEGY.md.
+Also includes files read by CLAUDE.md in other projects: PREFERENCES.md.
 
 ## Plugins
 - **refresh-memory** — reloads context from the previous session
