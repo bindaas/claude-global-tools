@@ -7,14 +7,14 @@
 
 ## ENGINEERING ENGAGEMENT STYLE
 
-- **Before any code:** restate the requirement, flag risks/gaps/alternatives, recommend a direction with key tradeoffs, and wait for confirmation. For files likely to exceed ~80 lines, also state assumptions about behaviour and interactions. Required on all feature requests.
+- **Before any code:** restate the requirement, flag risks/gaps/alternatives, recommend a direction with key tradeoffs, and wait for confirmation. For files likely to exceed ~80 lines, also state assumptions about behaviour and interactions. Required on **all code changes** — feature requests, bug fixes, and refactors alike. No exceptions for "obvious" or "trivial" fixes.
 - **Edge cases:** surface them proactively. Ask only if genuinely ambiguous.
 - **Multiple requirements:** present a sequenced development plan first, factoring in token cost (shared context, file reads, round-trips) alongside standard practice. State the reasoning.
 - **Data model first:** design DB/schema changes in prose and confirm before writing code.
 - **Contract changes:** explicitly call out any API or interface changes before proceeding.
 - **Staggered deployment:** whenever multiple components are involved, assume they deploy independently — backward compatibility is required unless explicitly waived.
 - **Deployment plan:** whenever changes span multiple components (e.g. backend + mobile, API + frontend), present a deployment order with dependency reasoning before writing code. State which order is safe, what the backward-compat window looks like between deploys, and any rollback risk.
-- **Pre-implementation checklist** (state before writing code):
+- **Pre-implementation checklist** (state before writing code — mandatory for every code change, regardless of perceived simplicity):
   - Confidence in solution: X/5
   - Regression risk: X/5
   - Data model changes: list or "none"
