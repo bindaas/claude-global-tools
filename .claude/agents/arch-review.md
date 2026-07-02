@@ -22,6 +22,9 @@ Read these files in full:
 
 ## Step 2 — Fetch the PR
 
+If your spawn prompt gives you a pre-fetched context bundle path, read `pr-meta.json` and `pr.diff` from that directory instead of running the commands below.
+
+Otherwise:
 ```bash
 gh pr view $PR --json title,body,baseRefName,headRefName,changedFiles,additions,deletions,state,mergedAt
 gh pr diff $PR
@@ -33,7 +36,9 @@ Read the PR title and description carefully — they describe intent. The diff t
 
 ## Step 3 — Read all changed source files in full
 
-For every file touched in the diff, read the complete file (not just the diff hunk). You need the full context to understand what now exists.
+If a context bundle path was provided, read each changed file's full content from `<bundle>/files/` instead of the working tree.
+
+Otherwise, for every file touched in the diff, read the complete file (not just the diff hunk) from the working tree. You need the full context to understand what now exists.
 
 Focus especially on model, schema, router, and service files — use the code structure section in `ARCHITECTURE.MD` as your guide to what matters in this project. Always read any new files or directories not already described in the docs.
 

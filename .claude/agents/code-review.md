@@ -15,6 +15,9 @@ Read these files in full before looking at any code:
 
 ## Step 2 — Fetch the PR
 
+If your spawn prompt gives you a pre-fetched context bundle path, read `pr-meta.json` and `pr.diff` from that directory instead of running the commands below.
+
+Otherwise:
 ```bash
 gh pr view $PR --json title,body,author,baseRefName,headRefName,additions,deletions,changedFiles
 gh pr diff $PR
@@ -24,7 +27,9 @@ Read the PR title and description carefully — they are part of what you are re
 
 ## Step 3 — Read changed source files
 
-For every file touched in the diff, read the full file (not just the diff hunk) so you understand the surrounding context.
+If a context bundle path was provided, read each changed file's full content from `<bundle>/files/` instead of the working tree.
+
+Otherwise, for every file touched in the diff, read the full file (not just the diff hunk) from the working tree so you understand the surrounding context.
 
 ## Step 4 — Review
 

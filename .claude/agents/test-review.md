@@ -14,6 +14,9 @@ Read these files in full before looking at any code:
 
 ## Step 2 — Fetch the PR
 
+If your spawn prompt gives you a pre-fetched context bundle path, read `pr-meta.json` and `pr.diff` from that directory instead of running the commands below.
+
+Otherwise:
 ```bash
 gh pr view $PR --json title,body,baseRefName,headRefName,changedFiles,additions,deletions
 gh pr diff $PR
@@ -23,9 +26,9 @@ Read the PR title and description carefully — they tell you what behaviour was
 
 ## Step 3 — Read the full test file and all changed source files
 
-Locate the integration test file using the testing section in `ARCHITECTURE.MD`. Read it in full and understand its structure and conventions before making any changes — test infrastructure varies by project.
+Locate the integration test file using the testing section in `ARCHITECTURE.MD`. Read it directly from the working tree in full and understand its structure and conventions before making any changes — test infrastructure varies by project. (The test file is not necessarily in the bundle — read it from the working tree regardless of whether a bundle was provided.)
 
-For every source file touched in the PR diff, read it in full.
+For every other source file touched in the PR diff: if a context bundle path was provided, read its full content from `<bundle>/files/`; otherwise read it in full from the working tree.
 
 ## Step 4 — Testing strategy assessment
 
