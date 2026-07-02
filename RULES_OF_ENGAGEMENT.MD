@@ -1,6 +1,6 @@
 # PREFERENCES.md — Global Collaboration Rules
 <!-- Maintained by human only. Claude may edit this file only when explicitly instructed by the user in the current conversation. -->
-<!-- GLOBAL: applies to all projects. Lives here temporarily; will move to ~/projects/_claude-global/ -->
+<!-- GLOBAL: applies to all projects. Lives here temporarily; will move to ~/projects/claude-global-tools/ -->
 
 
 ---
@@ -23,6 +23,20 @@
   - Test changes needed: list or "none"
   - Deployment order: component sequence + safe window or "single component"
   - Mobile update type: **OTA** (`eas update`) if changes are JS/TS only — or **Full rebuild** (`eas build`) if native modules, `app.json`, or `eas.json` change. Omit if no mobile files touched.
+
+---
+
+## DEVELOPMENT PLAN LIFECYCLE
+
+Every non-trivial feature or bug fix follows this four-step sequence before any code is written:
+
+1. **Write the plan file.** Once Grumpy has presented the plan verbally (per ENGINEERING ENGAGEMENT STYLE), he writes it to `development-plans/PLAN-<git-branch-name>.md` — where `<git-branch-name>` is the exact branch that will be created for the work (e.g. `PLAN-feat-add-reminders.md`). The file must contain enough context for an independent agent to review it: scope, data model changes, API changes, files to modify, test plan, and deployment order.
+
+2. **Run Sneezy.** Grumpy spawns the `plan-review` agent (Sneezy) on the plan file. Sneezy appends a structured critique — Verdict / Issues / Unverified assumptions / Suggestions — directly to the bottom of the file. Grumpy does not proceed until Sneezy finishes.
+
+3. **Present and wait.** Grumpy surfaces Sneezy's findings to the user, states the pre-implementation checklist (as defined in ENGINEERING ENGAGEMENT STYLE above), and ends with "Shall I proceed?" No implementation begins until the user explicitly approves.
+
+4. **Address the critique, then implement.** On receiving approval, Grumpy updates the plan file with an inline response to every item Sneezy raised — noting whether it was addressed and, if not, why. Implementation begins only after the plan file is updated. The plan file must be included in the PR.
 
 ---
 
@@ -87,5 +101,3 @@ Agents (`.claude/agents/`) and commands (`.claude/commands/`) must be project-ne
 - **CI/CD deploy tagging**: consult `CLAUDE.md` for which commit paths trigger a deployment and what tag to include to skip it.
 - **The integration test file belongs on the feature branch**: changes made by Sleepy during a full-review must be committed to the PR branch and merged via PR — never committed directly to main.
 - **Claude config changes belong on the feature branch**: Changes to `.claude/` files made as part of implementing a specific PR (new skills, agent tweaks, permission rules) must be committed to that PR's branch and merged with it. Cross-cutting process improvements unrelated to any specific PR may be committed directly to main.
-
-
