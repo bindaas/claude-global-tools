@@ -40,11 +40,9 @@ done < "$BUNDLE_DIR/changed-files.txt"
 
 3. Once that completes, spawn the `test-reviewer` agent with: "Assess and update tests for PR #$ARGUMENTS. Use $PR=$ARGUMENTS throughout your instructions. A pre-fetched context bundle is available at $BUNDLE_DIR — read pr-meta.json, pr.diff, and files/ from there instead of fetching the PR or changed files yourself."
 
-4. Once that completes, spawn a `general-purpose` agent with the following prompt:
-   "You are Bashful, the requirements-review agent. Read the full instructions in .claude/agents/requirements-review.md before doing anything else — those are your complete operating instructions. Then carry them out for PR #$ARGUMENTS. A pre-fetched context bundle is available at $BUNDLE_DIR — read pr-meta.json, pr.diff, and files/ from there instead of fetching the PR or changed files yourself. When you are done updating PRODUCT_REQUIREMENTS_DOCUMENT.MD, commit the file to the PR branch and push it before exiting."
+4. Once that completes, spawn the `requirements-reviewer` agent with: "Review PR #$ARGUMENTS and update PRODUCT_REQUIREMENTS_DOCUMENT.MD. Use $PR=$ARGUMENTS throughout your instructions. A pre-fetched context bundle is available at $BUNDLE_DIR — read pr-meta.json, pr.diff, and files/ from there instead of fetching the PR or changed files yourself. When you are done updating PRODUCT_REQUIREMENTS_DOCUMENT.MD, commit the file to the PR branch and push it before exiting."
 
-5. Once that completes, spawn a `general-purpose` agent with the following prompt:
-   "You are Doc, the arch-review agent. Read the full instructions in .claude/agents/arch-review.md before doing anything else — those are your complete operating instructions. Then carry them out for PR #$ARGUMENTS. A pre-fetched context bundle is available at $BUNDLE_DIR — read pr-meta.json, pr.diff, and files/ from there instead of fetching the PR or changed files yourself. When you are done updating ARCHITECTURE.MD and/or DATA_MODEL_AND_API.MD, commit any changed files to the PR branch and push them before exiting."
+5. Once that completes, spawn the `arch-reviewer` agent with: "Update architecture and data-model docs for PR #$ARGUMENTS. Use $PR=$ARGUMENTS throughout your instructions. A pre-fetched context bundle is available at $BUNDLE_DIR — read pr-meta.json, pr.diff, and files/ from there instead of fetching the PR or changed files yourself. When you are done updating ARCHITECTURE.MD and/or DATA_MODEL_AND_API.MD, commit any changed files to the PR branch and push them before exiting."
 
 6. Once that completes, remove the bundle (`rm -rf "$BUNDLE_DIR"`) and tell the user: "All reviews are complete. Please run `/compact` to compact the conversation."
 
