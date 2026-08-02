@@ -11,20 +11,10 @@ Set `PR=$ARGUMENTS` and `BUNDLE_DIR=/tmp/full-review-pr-$PR` throughout.
 
 ## Bundle build (run before step 1, and again after step 2)
 
-All four reviewers need the same PR metadata, diff, and changed-file contents. Instead of letting each one fetch it independently, build it once into a shared bundle and point each agent at it. Do not read the bundle's contents into your own context — just build it on disk:
+All four reviewers need the same PR metadata, diff, and changed-file contents. Instead of letting each one fetch it independently, build it once into a shared bundle and point each agent at it. Do not read the bundle's contents into your own context — just build it on disk by running the bundle-build script:
 
 ```bash
-gh pr checkout $PR
-rm -rf "$BUNDLE_DIR" && mkdir -p "$BUNDLE_DIR/files"
-gh pr view $PR --json title,body,author,baseRefName,headRefName,additions,deletions,changedFiles,state,mergedAt,files > "$BUNDLE_DIR/pr-meta.json"
-gh pr diff $PR > "$BUNDLE_DIR/pr.diff"
-jq -r '.files[].path' "$BUNDLE_DIR/pr-meta.json" > "$BUNDLE_DIR/changed-files.txt"
-while IFS= read -r f; do
-  if [ -f "$f" ]; then
-    mkdir -p "$BUNDLE_DIR/files/$(dirname "$f")"
-    cp "$f" "$BUNDLE_DIR/files/$f"
-  fi
-done < "$BUNDLE_DIR/changed-files.txt"
+bash /Users/bindaas/.claude/scripts/build-review-bundle.sh "$PR" "$BUNDLE_DIR"
 ```
 
 1. Run the bundle build above (pre-fix state). Spawn the `code-reviewer` agent with: "Review PR #$ARGUMENTS. Use $PR=$ARGUMENTS throughout your instructions. A pre-fetched context bundle is available at $BUNDLE_DIR — read pr-meta.json, pr.diff, and files/ from there instead of fetching the PR or changed files yourself."
