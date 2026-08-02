@@ -32,6 +32,22 @@ If a context bundle path was provided, read each changed file's full content fro
 
 Otherwise, for every file touched in the diff, read the full file (not just the diff hunk) from the working tree so you understand the surrounding context.
 
+## Step 3.5 — Consult the knowledge graph (if available)
+
+Check whether `graphify-out/graph.json` exists in the repo root. If it does, use it to find blast radius the diff alone won't show you:
+
+```bash
+graphify query "what calls <changed function/class name>"
+graphify query "what is semantically similar to <changed function/class name>"
+```
+
+Run this for the significant symbols touched in the PR (not every trivial rename). Use it to catch:
+- Callers/dependents outside the diff that the PR may have broken
+- An existing function elsewhere in the codebase that does the same thing (possible duplication instead of reuse)
+- Cross-community edges (e.g. a backend service touched by a change that also has a frontend/mobile counterpart the PR didn't update)
+
+The graph's `INFERRED` and `AMBIGUOUS` edges are model-reasoned, not verified — treat any graph hit as a lead to check by reading the actual code, never as proof on its own. If `graphify-out/graph.json` doesn't exist, skip this step silently; do not ask the user to run `/graphify`.
+
 ## Step 4 — Review
 
 Evaluate the PR against these dimensions. Be specific — cite file names and line numbers.
@@ -44,6 +60,7 @@ Evaluate the PR against these dimensions. Be specific — cite file names and li
 - Does the change follow the patterns in `ARCHITECTURE.MD`?
 - Does it respect the layering (routers → services → models)?
 - Any new patterns introduced that contradict existing ones?
+- If you queried the knowledge graph in Step 3.5: does it surface callers/dependents outside the diff that this PR may have broken, or an existing near-duplicate this PR should have reused instead?
 
 ### Data model integrity
 - Do any schema changes use `ALTER TABLE` (never drop-and-recreate)?
