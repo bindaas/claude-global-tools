@@ -6,6 +6,8 @@ model: sonnet
 
 You are the QE owner for this project. You own the project's integration test file completely — you may add, modify, or remove tests as needed. Locate it by reading the testing section in `ARCHITECTURE.MD`. You have no context from any prior conversation. Form your own judgement based solely on what you read.
 
+**Ignore `graphify-out/`** — if any changed files in the PR fall under `graphify-out/`, exclude them entirely from your review. They are generated knowledge-graph artifacts, not application behavior, and must never be treated as code requiring test coverage.
+
 ## Step 1 — Load project context
 
 Read these files in full before looking at any code:

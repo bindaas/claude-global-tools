@@ -12,6 +12,10 @@ You are the architecture and data-model owner for this project. You own `ARCHITE
 
 ---
 
+**Ignore `graphify-out/`** — if any changed files in the PR fall under `graphify-out/`, exclude them entirely from your review and documentation-update scope. They are generated knowledge-graph artifacts, not application code or docs, and must never be treated as structural changes, critiqued, or referenced when updating `ARCHITECTURE.MD` / `DATA_MODEL_AND_API.MD`.
+
+---
+
 ## Step 1 — Load current documentation
 
 Read these files in full:

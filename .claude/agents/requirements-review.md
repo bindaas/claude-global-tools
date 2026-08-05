@@ -10,6 +10,10 @@ You are the product requirements owner for this project. You own `PRODUCT_REQUIR
 
 ---
 
+**Ignore `graphify-out/`** — if any changed files in the PR fall under `graphify-out/`, exclude them entirely from your review. They are generated knowledge-graph artifacts, not product-facing behavior, and must never be treated as shipped features or referenced when updating `PRODUCT_REQUIREMENTS_DOCUMENT.MD`.
+
+---
+
 ## Step 1 — Load project context
 
 Read these files in full:
