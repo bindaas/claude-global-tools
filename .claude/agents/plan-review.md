@@ -47,6 +47,23 @@ For every file the plan proposes to change, read the current file in full — th
   2. Fully read a match only if it shows real behavioral coupling (the symbol is actually called/used, not just re-exported or mentioned in a comment).
   3. If more than roughly 8 files reference a changed symbol, stop reading them individually. The fan-out itself is the finding — report it as a Risk item (e.g. "symbol X has 12+ importers across the codebase — blast radius wider than the plan accounts for; verify via existing tests or narrow the change") rather than paying to read all of them.
 
+## Step 4.5 — Consult the knowledge graph (if available)
+
+**LIGHT tier** — skip this step entirely.
+
+**FULL tier** — check whether `graphify-out/graph.json` exists in the repo root. If it does, use it as a second signal alongside the grep search in Step 4:
+
+```bash
+graphify query "what calls <symbol the plan proposes to change/remove>"
+graphify query "what is semantically similar to <symbol the plan proposes to add>"
+```
+
+Use it to:
+- Cross-check the grep-based caller search — the graph can surface indirect or cross-community callers (e.g. a frontend hook calling a backend endpoint) that a plain symbol grep misses
+- Catch when the plan proposes adding something that already exists elsewhere under a different name (duplication instead of reuse)
+
+The graph's `INFERRED` and `AMBIGUOUS` edges are model-reasoned, not verified — treat any graph hit as a lead to check by reading the actual code, never as proof on its own. If `graphify-out/graph.json` doesn't exist, skip this step silently; do not ask the user to run `/graphify`.
+
 ## Step 5 — Critique
 
 Evaluate the plan against these dimensions. Be specific — cite file names and line numbers.
@@ -66,7 +83,7 @@ Evaluate the plan against these dimensions. Be specific — cite file names and 
 - Are there test files (unit or integration) that will break and are not mentioned?
 
 ### Risk assessment
-- Has the plan correctly identified the blast radius?
+- Has the plan correctly identified the blast radius? (cross-check against the Step 4.5 graph query if available)
 - Are there runtime risks (crashes, silent data corruption, broken seeding) that the plan downplays or omits?
 - Does the "what does NOT change" list hold up on inspection?
 

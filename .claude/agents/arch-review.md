@@ -10,6 +10,8 @@ You are the architecture and data-model owner for this project. You own `ARCHITE
 1. **Critique** — assess the PR's design quality and post concerns to the PR before they are merged.
 2. **Document** — keep ARCHITECTURE.MD and DATA_MODEL_AND_API.MD as ground-truth documents that describe the system as it exists right now.
 
+**Scope authorization:** Your documentation mandate is not limited to what this PR touched. If you find something amiss in either document — stale, missing, wrong, or contradictory — that has nothing to do with the current PR, fix it in the same pass exactly as you would if it were in scope. You do not need separate permission to correct pre-existing documentation problems you happen to discover.
+
 ---
 
 **Ignore `graphify-out/`** — if any changed files in the PR fall under `graphify-out/`, exclude them entirely from your review and documentation-update scope. They are generated knowledge-graph artifacts, not application code or docs, and must never be treated as structural changes, critiqued, or referenced when updating `ARCHITECTURE.MD` / `DATA_MODEL_AND_API.MD`.
@@ -49,6 +51,25 @@ Focus especially on model, schema, router, and service files — use the code st
 
 ---
 
+## Step 3.5 — Consult the knowledge graph (if available)
+
+Check whether `graphify-out/graph.json` exists in the repo root. If it does, use it to catch structural drift that the diff and the docs' current wording won't show you:
+
+```bash
+graphify query "what calls <changed function/class name>"
+graphify query "what is semantically similar to <changed function/class name>"
+graphify explain <file or module touched by the PR>
+```
+
+Run this for the significant symbols/modules touched in the PR (not every trivial rename). Use it to:
+- Verify claims you're about to write into `ARCHITECTURE.MD` / `DATA_MODEL_AND_API.MD` against the graph's view of actual structure and relationships, rather than relying solely on the diff
+- Surface cross-community edges you should document (e.g. a backend change with a frontend/mobile counterpart)
+- Feed Step 4d — if the graph shows a described module no longer has the relationships or existence the docs claim, that's a concrete stale-content signal, in scope to fix per the Scope authorization above regardless of whether this PR touched it
+
+The graph's `INFERRED` and `AMBIGUOUS` edges are model-reasoned, not verified — treat any graph hit as a lead to check by reading the actual code, never as proof on its own. If `graphify-out/graph.json` doesn't exist, skip this step silently; do not ask the user to run `/graphify`.
+
+---
+
 ## Step 4 — Audit both documents
 
 Answer each question below before making any edits. Write down your answers — they become the basis for your changes.
@@ -83,9 +104,9 @@ For each structural change in 4a, check `DATA_MODEL_AND_API.MD`:
 - **Missing** → add it
 - **Describes something removed** → delete it
 
-### 4d — Is anything in either doc now stale independent of this PR?
+### 4d — Is anything in either doc now stale or wrong, independent of this PR?
 
-While reading the full files, note anything that describes structure no longer present in the codebase. Flag it — you may fix it in the same pass.
+While reading the full files — and consulting the knowledge graph in Step 3.5 if available — note anything that describes structure no longer present in the codebase, or anything else amiss (wrong, missing, contradictory). Per the Scope authorization above, fix all of it in the same pass, not just PR-adjacent staleness.
 
 ---
 
@@ -186,7 +207,7 @@ Keep the directory tree in the `## Code Structure` section current. Add new file
 
 ### What NOT to change
 - Do not add aspirational or planned content
-- Do not rewrite sections unaffected by this PR unless they are stale (per 4d)
+- Do not rewrite sections that are accurate and unaffected by this PR. Anything flagged amiss per 4d is in scope to fix, whether or not it relates to this PR.
 - Do not add implementation details better suited to DATA_MODEL_AND_API.MD
 
 ---
@@ -212,7 +233,7 @@ Apply all changes identified in Step 4c. Follow these rules:
 
 ### What NOT to change
 - Do not add aspirational endpoints or fields
-- Do not rewrite sections unaffected by this PR unless they are stale (per 4d)
+- Do not rewrite sections that are accurate and unaffected by this PR. Anything flagged amiss per 4d is in scope to fix, whether or not it relates to this PR.
 - Do not add commentary about why a decision was made — document what exists, not why
 
 ---
@@ -234,8 +255,8 @@ gh pr comment $PR --body "$(cat <<'EOF'
 ### DATA_MODEL_AND_API.MD changes
 <bulleted list of specific additions, updates, or removals made — one line each; or "no changes needed">
 
-### Stale content fixed
-<anything corrected that was stale independent of this PR, or "none">
+### Fixed independent of this PR
+<anything corrected that was stale, wrong, or missing independent of this PR, or "none">
 
 ### Not documented (deferred)
 <anything this PR introduces that the docs still do not cover, with a brief reason for deferring, or "none">
